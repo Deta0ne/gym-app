@@ -6,6 +6,7 @@ export interface Exercise {
   description: string;
   instructions: string[];
   imageUrl: string;
+  gifUrl: string;
   videoUrl?: string;
   difficulty: 'beginner' | 'intermediate' | 'advanced';
   equipment?: string[];
@@ -44,6 +45,7 @@ export const EXERCISES: Exercise[] = [
       'Kollarınızı tamamen uzatana kadar barı itin'
     ],
     imageUrl: 'benchPressImage.png.jpeg',
+    gifUrl: 'benchGif.gif',
     videoUrl: 'https://example.com/bench-press-video.mp4',
     difficulty: 'intermediate',
     equipment: ['Bench', 'Barbell', 'Weight plates']
@@ -62,6 +64,7 @@ export const EXERCISES: Exercise[] = [
       'Başlangıç pozisyonuna geri dönün'
     ],
     imageUrl: 'squatImage.jpeg',
+    gifUrl: 'squatGif.gif',
     videoUrl: 'https://example.com/squat-video.mp4',
     difficulty: 'beginner',
     equipment: ['Barbell', 'Weight plates', 'Squat rack']
@@ -79,6 +82,7 @@ export const EXERCISES: Exercise[] = [
       'Kontrollü bir şekilde başlangıç pozisyonuna dönün'
     ],
     imageUrl: 'pullUpImage.jpeg',
+    gifUrl: 'pullUpGif.gif',
     videoUrl: 'https://example.com/pull-up-video.mp4',
     difficulty: 'intermediate',
     equipment: ['Pull-up bar']
@@ -97,6 +101,7 @@ export const EXERCISES: Exercise[] = [
       'Nefes almaya devam ederek pozisyonu koruyun'
     ],
     imageUrl: 'PlankImage.jpeg',
+    gifUrl: 'PlankImage.jpeg',
     difficulty: 'beginner',
     equipment: []
   },
@@ -115,6 +120,7 @@ export const EXERCISES: Exercise[] = [
       'Kontrollü bir şekilde barı yere indirin'
     ],
     imageUrl: 'deadliftImage.jpeg',
+    gifUrl: 'deadliftGif.gif',
     videoUrl: 'https://example.com/deadlift-video.mp4',
     difficulty: 'intermediate',
     equipment: ['Barbell', 'Weight plates']

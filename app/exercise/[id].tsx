@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, ScrollView, Image, View, Dimensions } from 'react-native';
+import { StyleSheet, ScrollView, View, Dimensions } from 'react-native';
 import { useLocalSearchParams, Stack } from 'expo-router';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
@@ -7,7 +7,8 @@ import { IconSymbol } from '@/components/ui/IconSymbol';
 import { EXERCISES, MuscleGroup } from '@/constants/ExerciseData';
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
-import { getImageSource } from '@/utils/imageUtils';
+import { getGifSource } from '@/utils/imageUtils';
+import { Image } from 'expo-image';
 
 export default function ExerciseDetailScreen() {
     const { id } = useLocalSearchParams();
@@ -58,8 +59,13 @@ export default function ExerciseDetailScreen() {
             />
             <ScrollView style={styles.container}>
                 <View style={styles.imageContainer}>
-                    {getImageSource(exercise.imageUrl) ? (
-                        <Image source={getImageSource(exercise.imageUrl)} style={styles.image} resizeMode="cover" />
+                    {getGifSource(exercise.gifUrl) ? (
+                        <Image
+                            source={getGifSource(exercise.gifUrl)}
+                            style={styles.image}
+                            autoplay
+                            contentFit="contain"
+                        />
                     ) : (
                         <View style={[styles.placeholderImage, { backgroundColor: colors.cardBackground }]}>
                             <IconSymbol name="dumbbell.fill" size={80} color={colors.icon} />
