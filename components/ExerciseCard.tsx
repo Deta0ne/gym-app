@@ -6,6 +6,7 @@ import { Exercise, MuscleGroup } from '@/constants/ExerciseData';
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { IconSymbol } from './ui/IconSymbol';
+import { getImageSource } from '@/utils/imageUtils';
 
 interface ExerciseCardProps {
     exercise: Exercise;
@@ -44,8 +45,8 @@ export function ExerciseCard({ exercise, onPress }: ExerciseCardProps) {
         <TouchableOpacity onPress={() => onPress(exercise)}>
             <ThemedView style={styles.card}>
                 <View style={styles.imageContainer}>
-                    {exercise.imageUrl ? (
-                        <Image source={{ uri: exercise.imageUrl }} style={styles.image} resizeMode="cover" />
+                    {getImageSource(exercise.imageUrl) ? (
+                        <Image source={getImageSource(exercise.imageUrl)} style={styles.image} resizeMode="cover" />
                     ) : (
                         <View style={[styles.placeholderImage, { backgroundColor: colors.cardBackground }]}>
                             <IconSymbol name="dumbbell.fill" size={40} color={colors.icon} />

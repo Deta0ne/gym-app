@@ -7,6 +7,7 @@ import { IconSymbol } from '@/components/ui/IconSymbol';
 import { EXERCISES, ExerciseCategory, MuscleGroup } from '@/constants/ExerciseData';
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
+import { getImageSource } from '@/utils/imageUtils';
 
 export default function HomeScreen() {
     const router = useRouter();
@@ -85,9 +86,9 @@ export default function HomeScreen() {
                             onPress={() => navigateToExercise(exercise.id)}
                         >
                             <View style={styles.exerciseImageContainer}>
-                                {exercise.imageUrl ? (
+                                {getImageSource(exercise.imageUrl) ? (
                                     <Image
-                                        source={{ uri: exercise.imageUrl }}
+                                        source={getImageSource(exercise.imageUrl)}
                                         style={styles.exerciseImage}
                                         resizeMode="cover"
                                     />

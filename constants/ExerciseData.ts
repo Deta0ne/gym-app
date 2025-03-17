@@ -43,7 +43,7 @@ export const EXERCISES: Exercise[] = [
       'Barı göğsünüze indirin',
       'Kollarınızı tamamen uzatana kadar barı itin'
     ],
-    imageUrl: 'https://example.com/bench-press.jpg',
+    imageUrl: 'benchPressImage.png.jpeg',
     videoUrl: 'https://example.com/bench-press-video.mp4',
     difficulty: 'intermediate',
     equipment: ['Bench', 'Barbell', 'Weight plates']
@@ -61,7 +61,7 @@ export const EXERCISES: Exercise[] = [
       'Dizleriniz ayak parmaklarınızı geçmemeli',
       'Başlangıç pozisyonuna geri dönün'
     ],
-    imageUrl: 'https://example.com/squat.jpg',
+    imageUrl: 'squatImage.jpeg',
     videoUrl: 'https://example.com/squat-video.mp4',
     difficulty: 'beginner',
     equipment: ['Barbell', 'Weight plates', 'Squat rack']
@@ -78,7 +78,7 @@ export const EXERCISES: Exercise[] = [
       'Çenenizi barın üzerine çıkarana kadar kendinizi yukarı çekin',
       'Kontrollü bir şekilde başlangıç pozisyonuna dönün'
     ],
-    imageUrl: 'https://example.com/pull-up.jpg',
+    imageUrl: 'pullUpImage.jpeg',
     videoUrl: 'https://example.com/pull-up-video.mp4',
     difficulty: 'intermediate',
     equipment: ['Pull-up bar']
@@ -96,24 +96,27 @@ export const EXERCISES: Exercise[] = [
       'Karın kaslarınızı sıkın ve kalçanızı düşürmeyin',
       'Nefes almaya devam ederek pozisyonu koruyun'
     ],
-    imageUrl: 'https://example.com/plank.jpg',
+    imageUrl: 'PlankImage.jpeg',
     difficulty: 'beginner',
     equipment: []
   },
   {
     id: '5',
-    name: 'Jumping Jacks',
-    category: ExerciseCategory.Cardio,
-    targetMuscles: [MuscleGroup.FullBody],
-    description: 'Tüm vücudu çalıştıran ve kalp atış hızını artıran basit bir kardio egzersizidir.',
+    name: 'Deadlift',
+    category: ExerciseCategory.Strength,
+    targetMuscles: [MuscleGroup.Back, MuscleGroup.Legs, MuscleGroup.Core],
+    description: 'Sırt, bacak ve kor kaslarını güçlendiren temel bir bileşik egzersizdir.',
     instructions: [
-      'Ayaklarınız birleşik, kollarınız yanınızda olacak şekilde dik durun',
-      'Aynı anda kollarınızı başınızın üzerine kaldırırken bacaklarınızı yana doğru açın',
-      'Hızlı bir hareketle başlangıç pozisyonuna geri dönün',
-      'Hareketi tekrarlayın'
+      'Ayaklarınızı kalça genişliğinde açın',
+      'Barın önünde durun, barı bacaklarınızın hemen dışında kavrayın',
+      'Sırtınızı düz tutun, göğsünüzü yukarı kaldırın',
+      'Kalçalarınızı menteşe gibi kullanarak barı yerden kaldırın',
+      'Dizlerinizi ve kalçanızı düzleştirerek hareketi tamamlayın',
+      'Kontrollü bir şekilde barı yere indirin'
     ],
-    imageUrl: 'https://example.com/jumping-jacks.jpg',
-    difficulty: 'beginner',
-    equipment: []
+    imageUrl: 'deadliftImage.jpeg',
+    videoUrl: 'https://example.com/deadlift-video.mp4',
+    difficulty: 'intermediate',
+    equipment: ['Barbell', 'Weight plates']
   }
 ]; 

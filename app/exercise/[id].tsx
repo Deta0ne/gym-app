@@ -7,6 +7,7 @@ import { IconSymbol } from '@/components/ui/IconSymbol';
 import { EXERCISES, MuscleGroup } from '@/constants/ExerciseData';
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
+import { getImageSource } from '@/utils/imageUtils';
 
 export default function ExerciseDetailScreen() {
     const { id } = useLocalSearchParams();
@@ -57,8 +58,8 @@ export default function ExerciseDetailScreen() {
             />
             <ScrollView style={styles.container}>
                 <View style={styles.imageContainer}>
-                    {exercise.imageUrl ? (
-                        <Image source={{ uri: exercise.imageUrl }} style={styles.image} resizeMode="cover" />
+                    {getImageSource(exercise.imageUrl) ? (
+                        <Image source={getImageSource(exercise.imageUrl)} style={styles.image} resizeMode="cover" />
                     ) : (
                         <View style={[styles.placeholderImage, { backgroundColor: colors.cardBackground }]}>
                             <IconSymbol name="dumbbell.fill" size={80} color={colors.icon} />
