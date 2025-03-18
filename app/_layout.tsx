@@ -8,6 +8,7 @@ import 'react-native-reanimated';
 
 import { ThemeProvider, useColorScheme } from '@/context/ThemeContext';
 import { FavoritesProvider } from '@/context/FavoritesContext';
+import { WorkoutProvider } from '@/context/WorkoutContext';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -41,11 +42,15 @@ function RootLayoutNav() {
     return (
         <NavigationThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
             <FavoritesProvider>
-                <Stack>
-                    <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-                    <Stack.Screen name="+not-found" />
-                </Stack>
-                <StatusBar style={colorScheme === 'dark' ? 'light' : 'dark'} />
+                <WorkoutProvider>
+                    <Stack>
+                        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+                        <Stack.Screen name="exercise/[id]" options={{ headerTitle: 'Egzersiz Detayı' }} />
+                        <Stack.Screen name="workout/[id]" options={{ headerTitle: 'Antrenman Detayı' }} />
+                        <Stack.Screen name="+not-found" />
+                    </Stack>
+                    <StatusBar style={colorScheme === 'dark' ? 'light' : 'dark'} />
+                </WorkoutProvider>
             </FavoritesProvider>
         </NavigationThemeProvider>
     );

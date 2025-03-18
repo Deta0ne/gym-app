@@ -22,6 +22,22 @@ const MAPPING = {
     gear: 'settings',
     'door.left.hand.open': 'logout',
     'figure.strengthtraining.traditional': 'fitness-center',
+
+    'list.clipboard': 'list-alt',
+    'list.clipboard.fill': 'list-alt',
+    plus: 'add',
+    'plus.circle': 'add-circle',
+    'plus.circle.fill': 'add-circle',
+    trash: 'delete',
+    'trash.fill': 'delete',
+    pencil: 'edit',
+    xmark: 'close',
+    'xmark.circle.fill': 'cancel',
+    magnifyingglass: 'search',
+    calendar: 'event',
+    'exclamationmark.triangle': 'warning',
+    ellipsis: 'more-horiz',
+    'ellipsis.vertical': 'more-vert',
 } as Partial<
     Record<import('expo-symbols').SymbolViewProps['name'], React.ComponentProps<typeof MaterialIcons>['name']>
 >;
