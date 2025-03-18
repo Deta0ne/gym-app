@@ -24,6 +24,7 @@ export default function HomeScreen() {
     const chestExercises = EXERCISES.filter((ex) => ex.targetMuscles.includes(MuscleGroup.Chest));
     const legExercises = EXERCISES.filter((ex) => ex.targetMuscles.includes(MuscleGroup.Legs));
     const backExercises = EXERCISES.filter((ex) => ex.targetMuscles.includes(MuscleGroup.Back));
+    const absExercises = EXERCISES.filter((ex) => ex.targetMuscles.includes(MuscleGroup.Abs));
 
     // Navigate to exercise detail
     const navigateToExercise = (id: string) => {
@@ -153,6 +154,14 @@ export default function HomeScreen() {
                     >
                         <ThemedText style={styles.muscleGroupText}>Sırt</ThemedText>
                         <ThemedText style={styles.muscleGroupCount}>{backExercises.length} egzersiz</ThemedText>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity
+                        style={[styles.muscleGroupCard, { backgroundColor: '#9C27B0' }]}
+                        onPress={() => navigateToMuscleGroup(MuscleGroup.Abs)}
+                    >
+                        <ThemedText style={styles.muscleGroupText}>Karın</ThemedText>
+                        <ThemedText style={styles.muscleGroupCount}>{absExercises.length} egzersiz</ThemedText>
                     </TouchableOpacity>
                 </View>
             </View>

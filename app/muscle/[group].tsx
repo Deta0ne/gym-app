@@ -29,14 +29,14 @@ export default function MuscleGroupScreen() {
         <>
             <Stack.Screen
                 options={{
-                    title: formattedGroup,
+                    title: formattedGroup.charAt(0).toUpperCase() + formattedGroup.slice(1),
                     headerBackTitle: 'Geri',
                 }}
             />
             <ThemedView style={styles.container}>
                 <View style={styles.header}>
                     <ThemedText type="title" style={styles.title}>
-                        {formattedGroup} Egzersizleri
+                        {formattedGroup.charAt(0).toUpperCase() + formattedGroup.slice(1)} Egzersizleri
                     </ThemedText>
                     <ThemedText style={styles.subtitle}>{exercises.length} egzersiz bulundu</ThemedText>
                 </View>
@@ -68,7 +68,7 @@ export default function MuscleGroupScreen() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        paddingTop: 60,
+        paddingTop: 10,
     },
     header: {
         paddingHorizontal: 16,
