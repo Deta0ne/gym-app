@@ -6,10 +6,12 @@ import { ThemedView } from '@/components/ThemedView';
 import { ExerciseCard } from '@/components/ExerciseCard';
 import { EXERCISES, Exercise, MuscleGroup } from '@/constants/ExerciseData';
 import { useRouter } from 'expo-router';
+import { useFavorites } from '@/context/FavoritesContext';
 
 export default function MuscleGroupScreen() {
     const router = useRouter();
     const { group } = useLocalSearchParams();
+    const { isFavorite } = useFavorites();
 
     // Format muscle group from URL
     const formattedGroup = decodeURIComponent(group as string);
@@ -48,7 +50,11 @@ export default function MuscleGroupScreen() {
                         data={exercises}
                         keyExtractor={(item) => item.id}
                         renderItem={({ item }) => (
-                            <ExerciseCard exercise={item} onPress={() => handleExercisePress(item)} />
+                            <ExerciseCard
+                                exercise={item}
+                                onPress={() => handleExercisePress(item)}
+                                isFavorite={isFavorite(item.id)}
+                            />
                         )}
                         contentContainerStyle={styles.listContent}
                         showsVerticalScrollIndicator={false}

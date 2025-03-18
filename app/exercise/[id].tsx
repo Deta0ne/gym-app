@@ -89,21 +89,6 @@ export default function ExerciseDetailScreen() {
                 options={{
                     title: exercise.name,
                     headerBackTitle: 'Geri',
-                    headerRight: () => (
-                        <TouchableOpacity
-                            onPress={handleFavoriteToggle}
-                            disabled={isToggling}
-                            style={styles.favoriteButton}
-                            activeOpacity={0.7}
-                            hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
-                        >
-                            <IconSymbol
-                                name="star.fill"
-                                size={28}
-                                color={exerciseIsFavorite ? '#FFD700' : colors.icon}
-                            />
-                        </TouchableOpacity>
-                    ),
                 }}
             />
             <ScrollView style={styles.container}>
@@ -123,9 +108,24 @@ export default function ExerciseDetailScreen() {
                 </View>
 
                 <ThemedView style={styles.contentContainer}>
-                    <ThemedText type="title" style={styles.title}>
-                        {exercise.name}
-                    </ThemedText>
+                    <View style={styles.titleContainer}>
+                        <ThemedText type="title" style={styles.title}>
+                            {exercise.name}
+                        </ThemedText>
+                        <TouchableOpacity
+                            onPress={handleFavoriteToggle}
+                            disabled={isToggling}
+                            style={styles.favoriteButton}
+                            activeOpacity={0.7}
+                            hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+                        >
+                            <IconSymbol
+                                name="star.fill"
+                                size={28}
+                                color={exerciseIsFavorite ? '#FFD700' : colors.icon}
+                            />
+                        </TouchableOpacity>
+                    </View>
 
                     <View style={styles.badgeContainer}>
                         <View style={[styles.badge, { backgroundColor: colors.primary }]}>
@@ -256,8 +256,20 @@ const styles = StyleSheet.create({
         borderTopRightRadius: 20,
         marginTop: -20,
     },
-    title: {
+    titleContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
         marginBottom: 12,
+    },
+    title: {
+        flex: 1,
+    },
+    favoriteButton: {
+        padding: 8,
+        minWidth: 44,
+        minHeight: 44,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     badgeContainer: {
         flexDirection: 'row',
@@ -273,14 +285,6 @@ const styles = StyleSheet.create({
         color: 'white',
         fontSize: 14,
         fontWeight: 'bold',
-    },
-    favoriteButton: {
-        marginRight: 8,
-        padding: 8,
-        minWidth: 44,
-        minHeight: 44,
-        justifyContent: 'center',
-        alignItems: 'center',
     },
     sectionContainer: {
         marginBottom: 20,

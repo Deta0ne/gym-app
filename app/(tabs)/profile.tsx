@@ -9,6 +9,7 @@ import { useColorScheme } from '@/hooks/useColorScheme';
 import { useFavorites } from '@/context/FavoritesContext';
 import { useTheme } from '@/context/ThemeContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { AnimatedSwitch } from '@/components/ui/AnimatedSwitch';
 
 // Mock user data - in a real app, this would come from a database or API
 const USER_DATA = {
@@ -117,11 +118,12 @@ export default function ProfileScreen() {
                             <IconSymbol name="bell.fill" size={20} color={colors.text} />
                             <ThemedText style={styles.settingLabel}>Bildirimler</ThemedText>
                         </View>
-                        <Switch
+                        <AnimatedSwitch
                             value={notifications}
                             onValueChange={toggleNotifications}
-                            trackColor={{ false: '#767577', true: colors.primary }}
-                            thumbColor={'#f4f3f4'}
+                            activeColor={colors.primary}
+                            inactiveColor="#767577"
+                            thumbColor="#f4f3f4"
                         />
                     </View>
 
@@ -130,11 +132,12 @@ export default function ProfileScreen() {
                             <IconSymbol name="moon.fill" size={20} color={colors.text} />
                             <ThemedText style={styles.settingLabel}>Karanlık Mod</ThemedText>
                         </View>
-                        <Switch
+                        <AnimatedSwitch
                             value={isDarkMode}
                             onValueChange={toggleDarkMode}
-                            trackColor={{ false: '#767577', true: colors.primary }}
-                            thumbColor={'#f4f3f4'}
+                            activeColor={colors.primary}
+                            inactiveColor="#767577"
+                            thumbColor="#f4f3f4"
                         />
                     </View>
                 </View>

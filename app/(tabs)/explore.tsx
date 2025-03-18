@@ -8,11 +8,13 @@ import { ExerciseCard } from '@/components/ExerciseCard';
 import { EXERCISES, Exercise, ExerciseCategory, MuscleGroup } from '@/constants/ExerciseData';
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
+import { useFavorites } from '@/context/FavoritesContext';
 
 export default function ExercisesScreen() {
     const router = useRouter();
     const colorScheme = useColorScheme();
     const colors = Colors[colorScheme ?? 'light'];
+    const { isFavorite } = useFavorites();
 
     const [searchQuery, setSearchQuery] = useState('');
     const [filteredExercises, setFilteredExercises] = useState<Exercise[]>(EXERCISES);
@@ -79,7 +81,9 @@ export default function ExercisesScreen() {
                 <FlatList
                     data={filteredExercises}
                     keyExtractor={(item) => item.id}
-                    renderItem={({ item }) => <ExerciseCard exercise={item} onPress={handleExercisePress} />}
+                    renderItem={({ item }) => (
+                        <ExerciseCard exercise={item} onPress={handleExercisePress} isFavorite={isFavorite(item.id)} />
+                    )}
                     contentContainerStyle={styles.listContent}
                     showsVerticalScrollIndicator={false}
                 />

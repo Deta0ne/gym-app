@@ -8,11 +8,13 @@ import { EXERCISES, ExerciseCategory, MuscleGroup } from '@/constants/ExerciseDa
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { getImageSource } from '@/utils/imageUtils';
+import { useFavorites } from '@/context/FavoritesContext';
 
 export default function HomeScreen() {
     const router = useRouter();
     const colorScheme = useColorScheme();
     const colors = Colors[colorScheme ?? 'light'];
+    const { isFavorite } = useFavorites();
 
     // Group exercises by category
     const strengthExercises = EXERCISES.filter((ex) => ex.category === ExerciseCategory.Strength);
@@ -105,6 +107,11 @@ export default function HomeScreen() {
                                 ) : (
                                     <View style={[styles.placeholderImage, { backgroundColor: colors.cardBackground }]}>
                                         <IconSymbol name="dumbbell.fill" size={30} color={colors.icon} />
+                                    </View>
+                                )}
+                                {isFavorite(exercise.id) && (
+                                    <View style={styles.favoriteBadge}>
+                                        <IconSymbol name="star.fill" size={16} color="#FFD700" />
                                     </View>
                                 )}
                             </View>
@@ -223,6 +230,17 @@ const styles = StyleSheet.create({
     placeholderImage: {
         width: '100%',
         height: '100%',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    favoriteBadge: {
+        position: 'absolute',
+        top: 10,
+        left: 10,
+        width: 28,
+        height: 28,
+        borderRadius: 14,
+        backgroundColor: 'rgba(0,0,0,0.3)',
         justifyContent: 'center',
         alignItems: 'center',
     },
