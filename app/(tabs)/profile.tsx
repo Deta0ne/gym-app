@@ -7,6 +7,7 @@ import { IconSymbol } from '@/components/ui/IconSymbol';
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { useFavorites } from '@/context/FavoritesContext';
+import { useTheme } from '@/context/ThemeContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // Mock user data - in a real app, this would come from a database or API
@@ -22,19 +23,13 @@ export default function ProfileScreen() {
     const colorScheme = useColorScheme();
     const colors = Colors[colorScheme ?? 'light'];
     const { favorites } = useFavorites();
+    const { isDarkMode, toggleDarkMode } = useTheme();
 
     const [notifications, setNotifications] = useState(true);
-    const [darkMode, setDarkMode] = useState(colorScheme === 'dark');
 
     // Toggle notifications setting
     const toggleNotifications = () => {
         setNotifications(!notifications);
-    };
-
-    // Toggle dark mode setting
-    const toggleDarkMode = () => {
-        setDarkMode(!darkMode);
-        // In a real app, this would update the app's theme
     };
 
     // Navigate to favorites screen
@@ -136,7 +131,7 @@ export default function ProfileScreen() {
                             <ThemedText style={styles.settingLabel}>Karanlık Mod</ThemedText>
                         </View>
                         <Switch
-                            value={darkMode}
+                            value={isDarkMode}
                             onValueChange={toggleDarkMode}
                             trackColor={{ false: '#767577', true: colors.primary }}
                             thumbColor={'#f4f3f4'}
