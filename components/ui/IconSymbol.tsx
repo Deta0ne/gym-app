@@ -17,6 +17,11 @@ const MAPPING = {
     'person.fill': 'person',
     'star.fill': 'star',
     'figure.walk': 'directions-walk',
+    'bell.fill': 'notifications',
+    'moon.fill': 'nightlight-round',
+    gear: 'settings',
+    'door.left.hand.open': 'logout',
+    'figure.strengthtraining.traditional': 'fitness-center',
 } as Partial<
     Record<import('expo-symbols').SymbolViewProps['name'], React.ComponentProps<typeof MaterialIcons>['name']>
 >;
