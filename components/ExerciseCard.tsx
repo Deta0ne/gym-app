@@ -11,9 +11,10 @@ import { getImageSource } from '@/utils/imageUtils';
 interface ExerciseCardProps {
     exercise: Exercise;
     onPress: (exercise: Exercise) => void;
+    isFavorite?: boolean;
 }
 
-export function ExerciseCard({ exercise, onPress }: ExerciseCardProps) {
+export function ExerciseCard({ exercise, onPress, isFavorite = false }: ExerciseCardProps) {
     const colorScheme = useColorScheme();
     const colors = Colors[colorScheme ?? 'light'];
 
@@ -57,6 +58,12 @@ export function ExerciseCard({ exercise, onPress }: ExerciseCardProps) {
                             {exercise.difficulty.charAt(0).toUpperCase() + exercise.difficulty.slice(1)}
                         </ThemedText>
                     </View>
+
+                    {isFavorite && (
+                        <View style={styles.favoriteBadge}>
+                            <IconSymbol name="star.fill" size={16} color="#FFD700" />
+                        </View>
+                    )}
                 </View>
 
                 <View style={styles.contentContainer}>
@@ -125,6 +132,17 @@ const styles = StyleSheet.create({
         color: 'white',
         fontSize: 12,
         fontWeight: 'bold',
+    },
+    favoriteBadge: {
+        position: 'absolute',
+        top: 10,
+        left: 10,
+        width: 28,
+        height: 28,
+        borderRadius: 14,
+        backgroundColor: 'rgba(0,0,0,0.3)',
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     contentContainer: {
         padding: 16,

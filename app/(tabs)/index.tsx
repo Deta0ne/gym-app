@@ -33,6 +33,11 @@ export default function HomeScreen() {
         router.push('/(tabs)/explore');
     };
 
+    // Navigate to favorites
+    const navigateToFavorites = () => {
+        router.push('/(tabs)/favorites');
+    };
+
     // Navigate to muscle group
     const navigateToMuscleGroup = (group: MuscleGroup) => {
         router.push(`/muscle/${encodeURIComponent(group)}`);
@@ -59,7 +64,7 @@ export default function HomeScreen() {
 
                 <TouchableOpacity
                     style={[styles.quickAccessCard, { backgroundColor: colors.secondary }]}
-                    onPress={() => {}}
+                    onPress={navigateToFavorites}
                 >
                     <IconSymbol name="star.fill" size={24} color="white" />
                     <ThemedText style={styles.quickAccessText}>Favoriler</ThemedText>

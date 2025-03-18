@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, ScrollView, View, Dimensions, TouchableOpacity } from 'react-native';
 import { useLocalSearchParams, Stack, useRouter } from 'expo-router';
 import { ThemedText } from '@/components/ThemedText';
@@ -8,6 +8,7 @@ import { EXERCISES, MuscleGroup, Exercise } from '@/constants/ExerciseData';
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { getGifSource, getImageSource } from '@/utils/imageUtils';
+import { useFavorites } from '@/context/FavoritesContext';
 import { Image } from 'expo-image';
 
 export default function ExerciseDetailScreen() {
@@ -15,6 +16,10 @@ export default function ExerciseDetailScreen() {
     const router = useRouter();
     const colorScheme = useColorScheme();
     const colors = Colors[colorScheme ?? 'light'];
+    const [isToggling, setIsToggling] = useState(false);
+
+    // Use favorites context
+    const { isFavorite, toggleFavorite } = useFavorites();
 
     // Find exercise by ID
     const exercise = EXERCISES.find((ex) => ex.id === id);
@@ -66,12 +71,39 @@ export default function ExerciseDetailScreen() {
         router.push(`/exercise/${exerciseId}`);
     };
 
+    // Check if current exercise is favorited
+    const exerciseIsFavorite = isFavorite(exercise.id);
+
+    // Handle favorite toggle with context
+    const handleFavoriteToggle = async () => {
+        if (isToggling) return; // Prevent multiple rapid taps
+
+        setIsToggling(true);
+        await toggleFavorite(exercise.id);
+        setIsToggling(false);
+    };
+
     return (
         <>
             <Stack.Screen
                 options={{
                     title: exercise.name,
                     headerBackTitle: 'Geri',
+                    headerRight: () => (
+                        <TouchableOpacity
+                            onPress={handleFavoriteToggle}
+                            disabled={isToggling}
+                            style={styles.favoriteButton}
+                            activeOpacity={0.7}
+                            hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+                        >
+                            <IconSymbol
+                                name="star.fill"
+                                size={28}
+                                color={exerciseIsFavorite ? '#FFD700' : colors.icon}
+                            />
+                        </TouchableOpacity>
+                    ),
                 }}
             />
             <ScrollView style={styles.container}>
@@ -107,6 +139,12 @@ export default function ExerciseDetailScreen() {
                                 {exercise.difficulty.charAt(0).toUpperCase() + exercise.difficulty.slice(1)}
                             </ThemedText>
                         </View>
+
+                        {exerciseIsFavorite && (
+                            <View style={[styles.badge, { backgroundColor: '#FFD700' }]}>
+                                <ThemedText style={styles.badgeText}>Favori</ThemedText>
+                            </View>
+                        )}
                     </View>
 
                     <ThemedView style={styles.sectionContainer}>
@@ -235,6 +273,14 @@ const styles = StyleSheet.create({
         color: 'white',
         fontSize: 14,
         fontWeight: 'bold',
+    },
+    favoriteButton: {
+        marginRight: 8,
+        padding: 8,
+        minWidth: 44,
+        minHeight: 44,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     sectionContainer: {
         marginBottom: 20,

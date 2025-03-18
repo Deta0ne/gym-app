@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, FlatList, View, Text } from 'react-native';
+import { StyleSheet, FlatList, View } from 'react-native';
 import { useLocalSearchParams, Stack } from 'expo-router';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
@@ -11,10 +11,10 @@ export default function MuscleGroupScreen() {
     const router = useRouter();
     const { group } = useLocalSearchParams();
 
-    // Decode the group parameter
+    // Format muscle group from URL
     const formattedGroup = decodeURIComponent(group as string);
 
-    // Filter exercises by the selected muscle group
+    // Filter exercises by selected muscle group
     const muscleGroup = formattedGroup.toLowerCase() as MuscleGroup;
     const exercises = EXERCISES.filter((exercise) => exercise.targetMuscles.includes(muscleGroup));
 
@@ -27,14 +27,14 @@ export default function MuscleGroupScreen() {
         <>
             <Stack.Screen
                 options={{
-                    title: formattedGroup.charAt(0).toUpperCase() + formattedGroup.slice(1),
+                    title: formattedGroup,
                     headerBackTitle: 'Geri',
                 }}
             />
             <ThemedView style={styles.container}>
                 <View style={styles.header}>
                     <ThemedText type="title" style={styles.title}>
-                        {formattedGroup.charAt(0).toUpperCase() + formattedGroup.slice(1)} Egzersizleri
+                        {formattedGroup} Egzersizleri
                     </ThemedText>
                     <ThemedText style={styles.subtitle}>{exercises.length} egzersiz bulundu</ThemedText>
                 </View>
@@ -62,7 +62,7 @@ export default function MuscleGroupScreen() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        paddingTop: 20,
+        paddingTop: 60,
     },
     header: {
         paddingHorizontal: 16,
