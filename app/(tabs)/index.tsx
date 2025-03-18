@@ -33,6 +33,11 @@ export default function HomeScreen() {
         router.push('/(tabs)/explore');
     };
 
+    // Navigate to muscle group
+    const navigateToMuscleGroup = (group: MuscleGroup) => {
+        router.push(`/muscle/${encodeURIComponent(group)}`);
+    };
+
     return (
         <ScrollView style={styles.container}>
             <View style={styles.header}>
@@ -116,7 +121,7 @@ export default function HomeScreen() {
                 <View style={styles.muscleGroupsContainer}>
                     <TouchableOpacity
                         style={[styles.muscleGroupCard, { backgroundColor: '#FF5722' }]}
-                        onPress={() => {}}
+                        onPress={() => navigateToMuscleGroup(MuscleGroup.Chest)}
                     >
                         <ThemedText style={styles.muscleGroupText}>Göğüs</ThemedText>
                         <ThemedText style={styles.muscleGroupCount}>{chestExercises.length} egzersiz</ThemedText>
@@ -124,7 +129,7 @@ export default function HomeScreen() {
 
                     <TouchableOpacity
                         style={[styles.muscleGroupCard, { backgroundColor: '#2196F3' }]}
-                        onPress={() => {}}
+                        onPress={() => navigateToMuscleGroup(MuscleGroup.Legs)}
                     >
                         <ThemedText style={styles.muscleGroupText}>Bacak</ThemedText>
                         <ThemedText style={styles.muscleGroupCount}>{legExercises.length} egzersiz</ThemedText>
@@ -132,7 +137,7 @@ export default function HomeScreen() {
 
                     <TouchableOpacity
                         style={[styles.muscleGroupCard, { backgroundColor: '#4CAF50' }]}
-                        onPress={() => {}}
+                        onPress={() => navigateToMuscleGroup(MuscleGroup.Back)}
                     >
                         <ThemedText style={styles.muscleGroupText}>Sırt</ThemedText>
                         <ThemedText style={styles.muscleGroupCount}>{backExercises.length} egzersiz</ThemedText>
