@@ -1,17 +1,18 @@
 import React from 'react';
-import { StyleSheet, ScrollView, View, Dimensions } from 'react-native';
-import { useLocalSearchParams, Stack } from 'expo-router';
+import { StyleSheet, ScrollView, View, Dimensions, TouchableOpacity } from 'react-native';
+import { useLocalSearchParams, Stack, useRouter } from 'expo-router';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { IconSymbol } from '@/components/ui/IconSymbol';
-import { EXERCISES, MuscleGroup } from '@/constants/ExerciseData';
+import { EXERCISES, MuscleGroup, Exercise } from '@/constants/ExerciseData';
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
-import { getGifSource } from '@/utils/imageUtils';
+import { getGifSource, getImageSource } from '@/utils/imageUtils';
 import { Image } from 'expo-image';
 
 export default function ExerciseDetailScreen() {
     const { id } = useLocalSearchParams();
+    const router = useRouter();
     const colorScheme = useColorScheme();
     const colors = Colors[colorScheme ?? 'light'];
 
@@ -47,6 +48,22 @@ export default function ExerciseDetailScreen() {
             default:
                 return colors.text;
         }
+    };
+
+    // Find similar exercises
+    const getSimilarExercises = () => {
+        return EXERCISES.filter(
+            (ex) =>
+                // Different exercise but has at least one matching muscle group
+                ex.id !== exercise.id && ex.targetMuscles.some((muscle) => exercise.targetMuscles.includes(muscle)),
+        ).slice(0, 4); // Limit to 4 similar exercises
+    };
+
+    const similarExercises = getSimilarExercises();
+
+    // Navigate to another exercise
+    const navigateToExercise = (exerciseId: string) => {
+        router.push(`/exercise/${exerciseId}`);
     };
 
     return (
@@ -120,6 +137,55 @@ export default function ExerciseDetailScreen() {
                             </View>
                         ))}
                     </ThemedView>
+
+                    {/* Similar Exercises Section */}
+                    {similarExercises.length > 0 && (
+                        <ThemedView style={styles.sectionContainer}>
+                            <ThemedText type="subtitle" style={styles.similarTitle}>
+                                Benzer Egzersizler
+                            </ThemedText>
+                            <ThemedText style={styles.similarSubtitle}>
+                                Aynı kas gruplarını çalıştıran diğer hareketler
+                            </ThemedText>
+
+                            <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.similarList}>
+                                {similarExercises.map((similar) => (
+                                    <TouchableOpacity
+                                        key={similar.id}
+                                        style={styles.similarCard}
+                                        onPress={() => navigateToExercise(similar.id)}
+                                    >
+                                        <View style={styles.similarImageContainer}>
+                                            {getImageSource(similar.imageUrl) ? (
+                                                <Image
+                                                    source={getImageSource(similar.imageUrl)}
+                                                    style={styles.similarImage}
+                                                    contentFit="cover"
+                                                />
+                                            ) : (
+                                                <View
+                                                    style={[
+                                                        styles.similarPlaceholder,
+                                                        { backgroundColor: colors.cardBackground },
+                                                    ]}
+                                                >
+                                                    <IconSymbol name="dumbbell.fill" size={28} color={colors.icon} />
+                                                </View>
+                                            )}
+                                        </View>
+                                        <ThemedText style={styles.similarName}>{similar.name}</ThemedText>
+                                        <ThemedText style={styles.similarMuscles}>
+                                            {formatMuscleGroups(
+                                                similar.targetMuscles.filter((muscle) =>
+                                                    exercise.targetMuscles.includes(muscle),
+                                                ),
+                                            )}
+                                        </ThemedText>
+                                    </TouchableOpacity>
+                                ))}
+                            </ScrollView>
+                        </ThemedView>
+                    )}
                 </ThemedView>
             </ScrollView>
         </>
@@ -196,5 +262,47 @@ const styles = StyleSheet.create({
     instructionText: {
         flex: 1,
         lineHeight: 22,
+    },
+    similarTitle: {
+        marginBottom: 4,
+    },
+    similarSubtitle: {
+        fontSize: 14,
+        opacity: 0.7,
+        marginBottom: 12,
+    },
+    similarList: {
+        marginLeft: -8,
+        paddingLeft: 8,
+    },
+    similarCard: {
+        width: 130,
+        marginRight: 16,
+    },
+    similarImageContainer: {
+        width: 130,
+        height: 130,
+        borderRadius: 10,
+        overflow: 'hidden',
+        marginBottom: 8,
+    },
+    similarImage: {
+        width: '100%',
+        height: '100%',
+    },
+    similarPlaceholder: {
+        width: '100%',
+        height: '100%',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    similarName: {
+        fontSize: 14,
+        fontWeight: 'bold',
+        marginBottom: 4,
+    },
+    similarMuscles: {
+        fontSize: 12,
+        opacity: 0.7,
     },
 });
