@@ -107,13 +107,13 @@ export default function WorkoutsScreen() {
                     <View style={styles.workoutMetadata}>
                         <View style={styles.metadataItem}>
                             <IconSymbol name="dumbbell.fill" size={16} color={colors.text} />
-                            <ThemedText style={styles.metadataText}>{exerciseCount} exercises</ThemedText>
+                            <ThemedText style={styles.metadataText}>{exerciseCount} egzersiz</ThemedText>
                         </View>
 
                         <View style={styles.metadataItem}>
                             <IconSymbol name="calendar" size={16} color={colors.text} />
                             <ThemedText style={styles.metadataText}>
-                                {new Date(item.updatedAt).toLocaleDateString('en-US')}
+                                {new Date(item.updatedAt).toLocaleDateString('tr-TR')}
                             </ThemedText>
                         </View>
                     </View>
@@ -135,24 +135,24 @@ export default function WorkoutsScreen() {
             <ThemedView style={styles.container}>
                 <View style={styles.header}>
                     <ThemedText type="title" style={styles.title}>
-                        My Workouts
+                        Antrenman Programlarım
                     </ThemedText>
-                    <ThemedText style={styles.subtitle}>Manage your personal workout programs</ThemedText>
+                    <ThemedText style={styles.subtitle}>Kişisel antrenman programlarınızı yönetin</ThemedText>
                 </View>
 
                 {workouts.length === 0 ? (
                     <View style={styles.emptyContainer}>
                         <IconSymbol name="list.clipboard" size={64} color={colors.text} style={{ opacity: 0.5 }} />
-                        <ThemedText style={styles.emptyText}>You don't have any workout lists yet</ThemedText>
+                        <ThemedText style={styles.emptyText}>Henüz antrenman programınız yok</ThemedText>
                         <ThemedText style={[styles.emptySubtext, { marginBottom: 20 }]}>
-                            Click the button below to create your first workout list
+                            "Egzersiz Ekle" butonuna tıklayarak antrenman programınızı oluşturmaya başlayın
                         </ThemedText>
                         <TouchableOpacity
                             style={[styles.addButton, { backgroundColor: colors.primary }]}
                             onPress={() => setModalVisible(true)}
                         >
                             <IconSymbol name="plus" size={20} color="white" />
-                            <ThemedText style={styles.addButtonText}>Create Workout List</ThemedText>
+                            <ThemedText style={styles.addButtonText}>Antrenman Programı Oluştur</ThemedText>
                         </TouchableOpacity>
                     </View>
                 ) : (
@@ -185,7 +185,7 @@ export default function WorkoutsScreen() {
                         <View style={[styles.modalContainer, { backgroundColor: colors.cardBackground }]}>
                             <View style={styles.modalHeader}>
                                 <ThemedText type="subtitle" style={styles.modalTitle}>
-                                    Create New Workout
+                                    Yeni Antrenman Programı Oluştur
                                 </ThemedText>
                                 <TouchableOpacity
                                     onPress={() => setModalVisible(false)}
@@ -197,7 +197,7 @@ export default function WorkoutsScreen() {
                             </View>
 
                             <View style={styles.modalBody}>
-                                <ThemedText style={styles.inputLabel}>Workout Name *</ThemedText>
+                                <ThemedText style={styles.inputLabel}>Antrenman Programı Adı *</ThemedText>
                                 <TextInput
                                     style={[
                                         styles.input,
@@ -207,13 +207,13 @@ export default function WorkoutsScreen() {
                                                 colorScheme === 'dark' ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)',
                                         },
                                     ]}
-                                    placeholder="E.g., Upper Body Workout"
+                                    placeholder="E.g., Üst Vücut Antrenmanı"
                                     placeholderTextColor={colors.text + '60'}
                                     value={workoutName}
                                     onChangeText={setWorkoutName}
                                 />
 
-                                <ThemedText style={styles.inputLabel}>Description (Optional)</ThemedText>
+                                <ThemedText style={styles.inputLabel}>Açıklama (İsteğe Bağlı)</ThemedText>
                                 <TextInput
                                     style={[
                                         styles.input,
@@ -224,7 +224,7 @@ export default function WorkoutsScreen() {
                                                 colorScheme === 'dark' ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)',
                                         },
                                     ]}
-                                    placeholder="A brief description about the workout"
+                                    placeholder="Antrenman programı hakkında kısa bir açıklama"
                                     placeholderTextColor={colors.text + '60'}
                                     value={workoutDescription}
                                     onChangeText={setWorkoutDescription}
@@ -237,7 +237,7 @@ export default function WorkoutsScreen() {
                                     style={[styles.modalButton, { backgroundColor: colors.primary }]}
                                     onPress={handleAddWorkout}
                                 >
-                                    <ThemedText style={styles.modalButtonText}>Create Workout</ThemedText>
+                                    <ThemedText style={styles.modalButtonText}>Antrenman Programı Oluştur</ThemedText>
                                 </TouchableOpacity>
                             </View>
                         </View>
