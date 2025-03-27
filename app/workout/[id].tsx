@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, ScrollView, Alert } from 'react-native';
+import { StyleSheet, View, ScrollView, Alert, ActivityIndicator } from 'react-native';
 import { useLocalSearchParams, Stack, useRouter } from 'expo-router';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
@@ -30,6 +30,7 @@ export default function WorkoutDetailScreen() {
     const [selectedExercise, setSelectedExercise] = useState<WorkoutExercise | null>(null);
     const [sets, setSets] = useState<WorkoutSet[]>([]);
     const [openActionMenuId, setOpenActionMenuId] = useState<string | null>(null);
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         loadWorkout();
@@ -85,9 +86,12 @@ export default function WorkoutDetailScreen() {
         if (!workout) return;
 
         try {
+            setIsLoading(true);
+
             const exerciseData = EXERCISES.find((e) => e.id === exerciseId);
             if (!exerciseData) {
                 Alert.alert('Hata', 'Egzersiz bulunamadı');
+                setIsLoading(false);
                 return;
             }
 
@@ -96,6 +100,7 @@ export default function WorkoutDetailScreen() {
                 Alert.alert('Uyarı', `"${exerciseData.name}" egzersizi bu antrenmana zaten eklenmiş.`, [
                     { text: 'Tamam', style: 'default' },
                 ]);
+                setIsLoading(false);
                 return;
             }
 
@@ -121,6 +126,16 @@ export default function WorkoutDetailScreen() {
             });
             setSets(initialSets);
 
+            const success = await addExerciseToWorkout(workout.id, exerciseId);
+
+            setIsLoading(false);
+
+            if (!success) {
+                Alert.alert('Hata', 'Egzersiz eklenirken bir hata oluştu. Lütfen tekrar deneyin.');
+                loadWorkout();
+                return;
+            }
+
             Alert.alert(
                 'Egzersiz Eklendi',
                 `"${exerciseData.name}" egzersizi eklendi. Şimdi set bilgilerini düzenleyebilirsiniz.`,
@@ -131,13 +146,8 @@ export default function WorkoutDetailScreen() {
                     },
                 ],
             );
-
-            const success = await addExerciseToWorkout(workout.id, exerciseId);
-            if (!success) {
-                Alert.alert('Hata', 'Egzersiz eklenirken bir hata oluştu. Lütfen tekrar deneyin.');
-                loadWorkout();
-            }
         } catch (error) {
+            setIsLoading(false);
             Alert.alert('Hata', 'Egzersiz eklenirken bir hata oluştu');
             loadWorkout();
         }
@@ -271,7 +281,8 @@ export default function WorkoutDetailScreen() {
     if (!workout) {
         return (
             <ThemedView style={styles.loadingContainer}>
-                <ThemedText>Yükleniyor...</ThemedText>
+                <ActivityIndicator size="large" color={colors.primary} />
+                <ThemedText style={{ marginTop: 10 }}>Yükleniyor...</ThemedText>
             </ThemedView>
         );
     }
@@ -340,6 +351,16 @@ export default function WorkoutDetailScreen() {
                     removeSet={removeSet}
                     updateSet={updateSet}
                 />
+
+                {/* Loading Overlay */}
+                {isLoading && (
+                    <View style={styles.loadingOverlay}>
+                        <View style={styles.loadingCard}>
+                            <ActivityIndicator size="large" color={colors.primary} />
+                            <ThemedText style={{ marginTop: 16 }}>Egzersiz ekleniyor...</ThemedText>
+                        </View>
+                    </View>
+                )}
             </ThemedView>
         </>
     );
@@ -353,5 +374,29 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
+    },
+    loadingOverlay: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        backgroundColor: 'rgba(0,0,0,0.5)',
+        justifyContent: 'center',
+        alignItems: 'center',
+        zIndex: 1000,
+    },
+    loadingCard: {
+        backgroundColor: 'white',
+        borderRadius: 12,
+        padding: 24,
+        alignItems: 'center',
+        justifyContent: 'center',
+        minWidth: 200,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,
     },
 });
